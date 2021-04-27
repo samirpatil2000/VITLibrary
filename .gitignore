@@ -1,3 +1,4 @@
+
 # Default ignored files
 env
 account/migrations
@@ -5,3 +6,17 @@ account/migrations
 /db.sqlite3
 /.idea
 /env
+=======
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+
+collectstatic
