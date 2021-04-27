@@ -3,16 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
 from account.models import Account
-from phonenumber_field.formfields import PhoneNumberField
 
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Add a valid email address.')
-    phone_number = PhoneNumberField(region='IN', help_text='Required. Add a valid phone number')
 
     class Meta:
         model = Account
-        fields = ('email', 'phone_number' ,'password1', 'password2', )
+        fields = ('email' ,'password1', 'password2', )
 
 
 class AccountAuthenticationForm(forms.ModelForm):
