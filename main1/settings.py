@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     #Apps
     'account',
+    'books',
 ]
 
 AUTH_USER_MODEL = 'account.Account' #appName.modelName
