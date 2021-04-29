@@ -1,8 +1,9 @@
 from django.urls import path
-from django import views
-from . import views
-from django.contrib.auth import views as auth_views
+from .views import books
 
 urlpatterns = [
-    # path('',views.,name='home'),
+    # path('',BookListView.as_view(),name='book_list'),
+    path('',books,name='book_list'),
+    # path('<category>/<strem>/<year>',books,name='book_list'),
+
  ]
