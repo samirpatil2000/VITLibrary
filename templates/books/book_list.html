@@ -27,12 +27,13 @@
       {% for book in books %}
       <div class="col-lg-4 col-12 mb-2 px-sm-1">
         <div class="card shadow-sm h-100">
-{#            <img src="{{ book.thumbnail.url }}">#}
+            <img class="card-img-top responsive" src="{{ book.thumbnail.url }}">
 
-          <img
-            src="{% thumbnail book.thumbnail 0x150 %}"
-            alt="No Image"
-            class="img-aspect p-2"/>
+{#          <img#}
+{#            src="{% thumbnail book.thumbnail 0x150 %}"#}
+{#            src="{{ book.thumbnail.url }}"#}
+{#            alt="No Image"#}
+{#            class="img-aspect p-2"/>#}
           <div class="card-body">
             <h3 class="card-subtitle font-weight-light">
               <a href="{{ book.get_absolute_url }}">{{book.name}}</a

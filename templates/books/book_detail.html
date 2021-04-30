@@ -15,7 +15,7 @@
 <div class="row mt-2 mb-4">
   <div class="col-lg-4 col-md-6 col-12">
     <img
-      src="{% thumbnail object.thumbnail 500x0 %}"
+      src="{{ object.thumbnail.url }}"
       alt="{{object.name}}"
       class="img-fluid mx-auto d-block"
     />
@@ -32,8 +32,13 @@
     </h4>
     <p>{{object.description}}</p>
     <span>
-        <a href="{{ object.pdf_file.url }}" download="{{ object.pdf_file.url }}" class="btn btn-outline-info">Download</a>
-        <a href="{{ object.pdf_file.url }}" class="btn btn-outline-success">View</a>
+        {% if object.pdf_file %}
+            <a href="{{ object.pdf_file.url }}" download="{{ object.pdf_file.url }}" class="btn btn-outline-info">Download</a>
+            <a href="{{ object.pdf_file.url }}" class="btn btn-outline-success">View</a>
+        {% else %}
+            <a href="#" download="#" class="btn btn-outline-info">Download</a>
+            <a href="#" class="btn btn-outline-success">View</a>
+        {% endif %}
     </span>
   </div>
 </div>

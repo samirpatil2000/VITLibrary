@@ -164,3 +164,19 @@ body {
     font-weight:600
   }
 }
+
+
+/* Addition CSS */
+.responsive{
+  width: 100%;
+  height: auto;
+}
+*{box-sizing: border-box;}
+@media (max-width:550px)
+{
+  .move
+
+  {
+   margin: 0px 30px;
+  }
+}
