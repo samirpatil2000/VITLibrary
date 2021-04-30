@@ -1,5 +1,10 @@
 from django.db import models
 
+
+from django.conf import settings
+from django.urls import reverse
+
+User=settings.AUTH_USER_MODEL
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -59,5 +64,5 @@ class Book(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('store:product_details', kwargs={'slug': self.slug})
+    def get_absolute_url(self):
+        return reverse('book_detail',kwargs={'slug':self.slug})

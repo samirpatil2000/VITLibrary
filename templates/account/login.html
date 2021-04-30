@@ -1,6 +1,9 @@
 {% extends 'account/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
+{#    <link rel="stylesheet" href="{% static 'css/logincss.css' %}">#}
+
 
 <div class="container">
     <form method="POST">
@@ -19,5 +22,59 @@
         </small>
     </div>
 </div>
+
+
+
+
+{#<form method="POST">#}
+{#        <input type="hidden" name="csrfmiddlewaretoken"#}
+{#               value="ESpAscRClZtn5Y7Shlldk5xV31r7SN1Ij4B9kVsej13psb8XFCcpf8RA9rSTb4d6">#}
+{#        <fieldset class="form-group">#}
+{#            <legend class="'border-bottom mb-4">Login Form </legend>#}
+{##}
+{##}
+{#                <div id="div_id_email" class="form-group">#}
+{#                    <label for="id_email" class=" requiredField">#}
+{#                        Email<span class="asteriskField">*</span>#}
+{#                    </label>#}
+{#                    <div class="">#}
+{#                        <input type="email" name="email" maxlength="60"#}
+{#                               class="emailinput form-control" required="" id="id_email">#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div id="div_id_password" class="form-group">#}
+{#                    <label for="id_password" class=" requiredField">#}
+{#                        Password<span class="asteriskField">*</span>#}
+{#                    </label>#}
+{#                    <div class="">#}
+{#                        <input type="password" name="password"#}
+{#                               class="textinput textInput form-control" required="" id="id_password">#}
+{#                    </div>#}
+{#                </div>#}
+{#        </fieldset>#}
+{#        <div class="form-group">#}
+{#            <button class="btn btn-outline-info" type="submit">Login</button>#}
+{#        </div>#}
+{#    </form>#}
+
+
+
+    {% comment %}
+<img src="logo1.png" width="40" height="40" alt="">
+
+        <h1> VIT library</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="box">
+                <i class="amar"></i>
+                <input type="email" name="email" id="id_email" placeholder="Enter Your Email">
+            </div>
+            <div class="box">
+                <i class="key"></i>
+                <input type="password" name="password" id="id_password" placeholder="Enter Your Password">
+            </div>
+            <button class="btn" type="submit">Sign In</button>
+        </form>
+{% endcomment %}
 
 {% endblock %}

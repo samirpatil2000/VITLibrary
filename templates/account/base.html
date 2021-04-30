@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
 
-    {% include 'books/a_head.html' %}
+{#    {% include 'books/a_head.html' %}#}
     <title>{% block title %}{% endblock %}</title>
       <head>
     <meta charset="UTF-8" />
@@ -23,8 +23,10 @@
 
   </head>
   <body>
+
   {% include 'books/a_navbar.html' %}
-        {% if messages %}
+  <div class="container">
+       {% if messages %}
         <div class="mt-0 pt-4">
           {% for message in messages %}
           <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -36,7 +38,9 @@
           {% endfor %}
         </div>
       {% endif %}
-  {% block content %} {% endblock %}
+    {% block content %} {% endblock %}
+  </div>
+
   {% include 'books/a_footer.html' %}
   </body>
 </html>

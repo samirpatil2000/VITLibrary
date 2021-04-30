@@ -5,6 +5,7 @@ from .forms import BookFilterForm
 from django_filters.views import FilterView
 # Create your views here.
 
+from account.models import Account
 
 empty_string = ''
 
@@ -28,6 +29,12 @@ def books(request):
     year = request.GET.get('year')
     stream = request.GET.get('stream')
 
+    if is_valid_params(category):
+        category_=Category.objects.get(id=category)
+        queryset = queryset.filter(category=category)
+        which_query+=str(category_.name)
+        which_query += " , "
+
     if is_valid_params(year):
         queryset = queryset.filter(year=year)
         which_query+=year
@@ -43,6 +50,8 @@ def books(request):
     }
     if is_valid_params(which_query):
         context['which_query']=which_query
+
+
     return  render(request,'books/book_list.html',context)
 
 
