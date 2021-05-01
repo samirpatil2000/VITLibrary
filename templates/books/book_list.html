@@ -23,7 +23,11 @@
   {% if which_query %}
     <h2 class="font-weight-light mb-2">Books {{ which_query }}  ({{ count }}) Found</h2>
   {% else %}
-      <h2 class="font-weight-light mb-2">All Books</h2>
+      {% if filter_by %}
+          <h2 class="font-weight-light mb-2">All Books {{ filter_by }}</h2>
+      {% else %}
+          <h2 class="font-weight-light mb-2">All Books</h2>
+      {% endif %}
   {% endif %}
     <hr />
     <div class="row">

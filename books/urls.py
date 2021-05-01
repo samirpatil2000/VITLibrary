@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import books,bookDetailView,aboutUs,contactUs,index,getBookDownloadUrl,uploadBook,stream_wise_books
+from .views import books,bookDetailView,aboutUs,contactUs,index,getBookDownloadUrl,uploadBook,stream_wise_books,category_wise_books
 
 urlpatterns = [
     # path('',BookListView.as_view(),name='book_list'),
     path('',index,name='index'),
     path('books/',books,name='book_list'),
-    path('books/<str:stream>',stream_wise_books,name='book_list_stream'),
+    path('books/stream/<str:stream>',stream_wise_books,name='book_list_stream'),
+    path('books/cat/<str:category>',category_wise_books,name='category_wise_books'),
     path('book/<str:slug>',bookDetailView,name='book_detail'),
     path('book-download/<str:slug>',getBookDownloadUrl,name='download_book'),
     path('uploadBook/',uploadBook,name='upload_book'),

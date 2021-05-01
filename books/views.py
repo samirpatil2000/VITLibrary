@@ -22,8 +22,17 @@ STREAM=[
     'BIOMED',
 ]
 def index(request):
+    stream_book_count=[]
+    for stream in STREAM:
+        stream_book_count.append(Book.objects.filter(stream__exact=stream).count())
+
+    category_book_count=[]
+    categories=Category.objects.all()
+    for category in categories:
+        category_book_count.append(Book.objects.filter(category=category).count())
     context={
-        'streams':STREAM,
+        'streams':zip(STREAM,stream_book_count),
+        'categories':zip(categories,category_book_count),
         'image':"https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
         'image_1':"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
         'image_2':"https://images.unsplash.com/photo-1533327325824-76bc4e62d560?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
@@ -134,8 +143,17 @@ def contactUs(request):
 def stream_wise_books(request,stream):
     context={
         'which_fun':None,
-        'books':Book.objects.filter(stream__exact=stream)
+        'books':Book.objects.filter(stream__exact=stream),
+        'filter_by':stream,
     }
     return render(request,'books/book_list.html',context)
 
 
+def category_wise_books(request,category):
+    context={
+        'which_fun':None,
+        'books':Book.objects.filter(category__name=category),
+        'filter_by':category,
+    }
+    print(context['books'])
+    return render(request,'books/book_list.html',context)
