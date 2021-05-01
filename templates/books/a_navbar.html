@@ -64,12 +64,12 @@
                     <a href="#" class="dropdown-item">
                       Change Password
                     </a>
-                    <a href="#" class="dropdown-item">Logout</a>
+                    <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
                   </div>
                 </li>
             {% else %}
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="{% url 'login' %}" class="nav-link">
 {#                    <i class="fa fa-sign-in fa-lg"></i> #}
                       Login
                   </a>
