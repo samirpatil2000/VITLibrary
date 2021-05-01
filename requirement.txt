@@ -1,8 +1,11 @@
 asgiref==3.2.10
 Django==3.1.1
+django-cleanup==5.1.0
 django-crispy-forms==1.9.2
+django-filter==2.4.0
 django-phonenumber-field==5.0.0
 djangorestframework==3.12.1
+easy-thumbnails==2.7
 phonenumbers==8.12.10
 Pillow==8.0.0
 pytz==2020.1

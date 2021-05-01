@@ -58,4 +58,6 @@ def login_view(request):
     # print(form)
     return render(request, "account/login.html", context)
 
+def profile(request):
+    return render(request,'account/profile.html')
 

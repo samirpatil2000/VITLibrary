@@ -1,8 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Book,Category
 from .filters import BookFilter
 from .forms import BookFilterForm
-from django_filters.views import FilterView
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 from account.models import Account
@@ -27,8 +28,19 @@ def bookDetailView(request,slug):
     }
     return render(request,'books/book_detail.html',context)
 
+@login_required
+def getBookDownloadUrl(request,slug):
+    object=Book.objects.get(slug=slug)
+    object.downloads.add(request.user)
+    object.save()
+    return redirect('book_detail',slug)
+
+
 def books(request):
     queryset = Book.objects.all()
+
+    search_book=request.GET.get('search_book')
+
 
     which_query=''
     form=BookFilterForm()
@@ -36,6 +48,14 @@ def books(request):
     category = request.GET.get('category')
     year = request.GET.get('year')
     stream = request.GET.get('stream')
+
+    if is_valid_params(search_book):
+        queryset=queryset.filter(Q(name__icontains=search_book)|
+                                 Q(author__icontains=search_book)|
+                                 Q(category__name__icontains=search_book)|
+                                 Q(stream__icontains=search_book)).distinct()
+        which_query+=search_book
+
 
     if is_valid_params(category):
         category_=Category.objects.get(id=category)
@@ -55,6 +75,7 @@ def books(request):
     context={
         'form':form,
         'books':queryset,
+        'count':queryset.count()
     }
     if is_valid_params(which_query):
         context['which_query']=which_query

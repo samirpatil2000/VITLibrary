@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'phonenumbers',
     'easy_thumbnails',
+    'django_cleanup',
 
     #Apps
     'account',

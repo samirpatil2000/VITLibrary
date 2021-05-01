@@ -33,7 +33,7 @@
     <p>{{object.description}}</p>
     <span>
         {% if object.pdf_file %}
-            <a href="{{ object.pdf_file.url }}" download="{{ object.pdf_file.url }}" class="btn btn-outline-info">Download</a>
+            <a href="{% url 'download_book' object.slug %}" download="{{ object.pdf_file.url }}" class="btn btn-outline-info">Download</a>
             <a href="{{ object.pdf_file.url }}" class="btn btn-outline-success">View</a>
         {% else %}
             <a href="#" download="#" class="btn btn-outline-info">Download</a>
