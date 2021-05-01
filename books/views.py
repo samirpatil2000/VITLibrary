@@ -2,9 +2,11 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Book,Category
 from .filters import BookFilter
-from .forms import BookFilterForm
+from .forms import BookFilterForm,UploadBooks
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+from django.core.mail import send_mail, send_mass_mail, EmailMessage
 
 from account.models import Account
 
@@ -12,13 +14,21 @@ empty_string = ''
 
 def is_valid_params(param):
     return param!=empty_string and param is not None
-
+STREAM=[
+    'EXTC',
+    'INFT',
+    'CS',
+    'ETRX',
+    'BIOMED',
+]
 def index(request):
     context={
+        'streams':STREAM,
         'image':"https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
         'image_1':"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
         'image_2':"https://images.unsplash.com/photo-1533327325824-76bc4e62d560?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
     }
+
     return render(request,'books/index.html',context)
 
 
@@ -37,6 +47,8 @@ def getBookDownloadUrl(request,slug):
 
 
 def books(request):
+    # email = EmailMessage('Subject', 'Body', to=['samir.patil@vit.edu.in'])
+    # email.send()
     queryset = Book.objects.all()
 
     search_book=request.GET.get('search_book')
@@ -73,6 +85,7 @@ def books(request):
         which_query += stream
         which_query += " , "
     context={
+        'which_fun':"main",
         'form':form,
         'books':queryset,
         'count':queryset.count()
@@ -83,6 +96,34 @@ def books(request):
 
     return  render(request,'books/book_list.html',context)
 
+def createSlug(title):
+    slug_=""
+    for i in title:
+        if i!=" ":
+            if ord(i)>=97:
+                slug_+=i
+            else:
+                slug_+=chr(ord(i)+32)
+        else:
+            slug_+="-"
+    return slug_
+
+@login_required
+def uploadBook(request):
+    form=UploadBooks()
+    if request.method=="POST":
+        form=UploadBooks(request.POST or None)
+        if form.is_valid():
+            name=request.POST.get('name')
+            book=form.save(commit=False)
+            book.uploaded_by=request.user
+            book.slug=createSlug(name)
+            book.save()
+            return redirect('book_detail',book.slug)
+    context={
+        'form':form
+    }
+    return render(request,'books/upload_book.html',context)
 
 def aboutUs(request):
     return render(request,'books/about_us.html')
@@ -90,5 +131,11 @@ def aboutUs(request):
 def contactUs(request):
     return render(request,'books/contactUS.html')
 
+def stream_wise_books(request,stream):
+    context={
+        'which_fun':None,
+        'books':Book.objects.filter(stream__exact=stream)
+    }
+    return render(request,'books/book_list.html',context)
 
 

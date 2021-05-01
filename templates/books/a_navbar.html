@@ -18,9 +18,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{% url 'upload_book' %}" class="nav-link">
 {#                <i class="fa fa-shopping-basket fa-lg mr-1"></i> #}
-                  Categories
+                  Upload Book
               </a>
             </li>
             <li class="nav-item">
@@ -60,7 +60,7 @@
                       user
                   </a>
                   <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">
                       Change Password
                     </a>

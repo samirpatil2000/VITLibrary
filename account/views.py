@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from account.forms import RegistrationForm, AccountAuthenticationForm#, AccountUpdateForm
-
+from django.contrib.auth import views as auth_view
 # Create your views here.
 def index(request):
     return render(request,'account/home.html')
@@ -60,4 +60,14 @@ def login_view(request):
 
 def profile(request):
     return render(request,'account/profile.html')
+
+def forgetPass(request,useremail):
+    forget_pass_view=auth_view.PasswordResetView.as_view(
+        template_name='account/password_reset.html',
+        initial={
+            'email':useremail,
+        }
+    )
+    return forget_pass_view(request)
+
 

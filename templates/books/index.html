@@ -33,7 +33,26 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+    <div class="row" style="margin-top: 10px">
+        {% for stream in streams %}
+        <div class="col-lg-4 col-12 mb-2 px-sm-1">
+            <div class="card shadow-sm h-100">
+    {#            <img class="card-img-top responsive" src="{{ book.thumbnail.url }}">#}
+              <div class="card-body">
+                <h3 class="card-subtitle font-weight-light">
+                  <a href="{% url 'book_list_stream' stream %}">{{ stream }}</a
+                  >
+                </h3>
+                <h4 class="card-text">
+                  <span class="badge badge-warning">Downloads 12</span>
+                </h4>
+                <p class="card-text">{{book.description|truncatewords:23 }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
 </div>
 
 
-  {% endblock content %}
+  {% endblock %}
