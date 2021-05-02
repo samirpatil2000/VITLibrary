@@ -4,6 +4,8 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 
+from account.models import Account
+
 User=settings.AUTH_USER_MODEL
 # Create your models here.
 class Category(models.Model):
@@ -37,8 +39,8 @@ YEAR=(
 )
 
 class Book(models.Model):
-    category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL,blank=True,null=True,related_name='books')
+    category = models.ManyToManyField(
+        Category,blank=True,null=True,related_name='books')
     name = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(unique=True)
     description = models.TextField(null=True, blank=True)
@@ -58,9 +60,9 @@ class Book(models.Model):
     year        = models.CharField(choices=YEAR,blank=True,max_length=100)
     stream      = models.CharField(choices=STREAM,blank=True,max_length=100)
 
-    uploaded_by=models.ForeignKey(User,default=1,on_delete=models.SET_NULL,blank=True,null=True,related_name="uploaded_by")
+    uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True,related_name="uploaded_by")
 
-    downloads=models.ManyToManyField(User,default=1,blank=True,null=True,related_name="downloaded_by")
+    downloads=models.ManyToManyField(User,blank=True,related_name="downloaded_by")
 
 
     class Meta:

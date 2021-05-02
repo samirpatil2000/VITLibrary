@@ -19,7 +19,7 @@ urlpatterns = [
 """
 1. profile page ( add books uploaded by that user )
 2. create class cr table and associate all user within is class 
-2. add books form
+--- 2. add books form
 --- 3. download url
 --- 4. search button
 

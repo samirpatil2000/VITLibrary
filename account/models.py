@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
-
+from django.core.exceptions import ValidationError
 
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, password=None):
@@ -31,7 +31,11 @@ class MyAccountManager(BaseUserManager):
 		return user
 
 
-
+def validate_geeks_mail(value):
+    if "@gmail.com" in value:
+        return value
+    else:
+        raise ValidationError("This field accepts mail id of google only")
 
 
 class Account(AbstractBaseUser):
