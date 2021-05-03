@@ -23,6 +23,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category_wise_books',kwargs={'slug':self.slug})
+
 
 STREAM=(
     ('EXTC','EXTC'),
@@ -40,7 +43,7 @@ YEAR=(
 
 class Book(models.Model):
     category = models.ManyToManyField(
-        Category,blank=True,null=True,related_name='books')
+        Category,blank=True,related_name='books')
     name = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(unique=True)
     description = models.TextField(null=True, blank=True)
@@ -74,3 +77,7 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book_detail',kwargs={'slug':self.slug})
+
+
+
+

@@ -42,9 +42,13 @@ def index(request):
 
 
 def bookDetailView(request,slug):
+
     context={
-        'object':Book.objects.get(slug=slug)
+        'object':Book.objects.get(slug=slug),
     }
+    context['books_cat']=context['object'].category.all()
+    context['books_count'] = len(context['books_cat'])
+    print(context['books_count'])
     return render(request,'books/book_detail.html',context)
 
 @login_required
@@ -135,7 +139,13 @@ def uploadBook(request):
     return render(request,'books/upload_book.html',context)
 
 def aboutUs(request):
-    return render(request,'books/about_us.html')
+
+    context={
+        'image':"https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+        'image_1':"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+        'image_2':"https://images.unsplash.com/photo-1533327325824-76bc4e62d560?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
+    }
+    return render(request,'books/about_us.html',context)
 
 def contactUs(request):
     return render(request,'books/contactUS.html')
@@ -155,5 +165,4 @@ def category_wise_books(request,category):
         'books':Book.objects.filter(category__name=category),
         'filter_by':category,
     }
-    print(context['books'])
     return render(request,'books/book_list.html',context)

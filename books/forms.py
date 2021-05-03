@@ -8,8 +8,8 @@ class BookFilterForm(forms.ModelForm):
         fields=[
             'category',
             # 'name',
-            'year',
-            'stream',
+            # 'year',
+            # 'stream',
         ]
 
 
