@@ -149,7 +149,7 @@ def notes(request):
 
 
     if is_valid_params(term):
-        queryset = queryset.filter(stream=term)
+        queryset = queryset.filter(term=term)
         which_query += term
         which_query += " , "
 
