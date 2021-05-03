@@ -1,4 +1,4 @@
-from .models import Book,Category
+from .models import Book,Category,Notes
 from django import forms
 
 class BookFilterForm(forms.ModelForm):
@@ -27,4 +27,15 @@ class UploadBooks(forms.ModelForm):
             'is_syllabus',
             'year',
             'stream',
+        ]
+
+class NotesFilterForm(forms.ModelForm):
+    class Meta:
+        model=Notes
+        fields=[
+            # 'name',
+            'year',
+            'stream',
+            'term',
+            # 'subject',
         ]

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Category,Book
+from .models import Category,Book,Notes
 
 # class CategoryAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'slug')
@@ -21,4 +21,9 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('name',)}
+
+
+@admin.register(Notes)
+class NotesAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}

@@ -4,6 +4,7 @@ env
 account/migrations
 books/migrations
 
+
 /db.sqlite3
 /.idea
 /env

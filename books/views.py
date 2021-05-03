@@ -1,8 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Book,Category
-from .filters import BookFilter
-from .forms import BookFilterForm,UploadBooks
+from .models import Book,Category,Notes
+from .forms import BookFilterForm,UploadBooks,NotesFilterForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -50,6 +49,7 @@ def bookDetailView(request,slug):
     context['books_count'] = len(context['books_cat'])
     print(context['books_count'])
     return render(request,'books/book_detail.html',context)
+
 
 @login_required
 def getBookDownloadUrl(request,slug):
@@ -108,6 +108,62 @@ def books(request):
 
 
     return  render(request,'books/book_list.html',context)
+
+def notesDetailView(request,slug):
+
+    context={
+        'object':Notes.objects.get(slug=slug),
+    }
+    return render(request,'books/notes_detail.html',context)
+
+def notes(request):
+    queryset = Notes.objects.all()
+
+    # search_book = request.GET.get('search_book')
+
+    which_query = ''
+    form = NotesFilterForm()
+
+    category = request.GET.get('category')
+    year = request.GET.get('year')
+    stream = request.GET.get('stream')
+    term = request.GET.get('term')
+
+    # if is_valid_params(search_book):
+    #     queryset = queryset.filter(Q(name__icontains=search_book) |
+    #                                Q(author__icontains=search_book) |
+    #                                Q(category__name__icontains=search_book) |
+    #                                Q(stream__icontains=search_book)).distinct()
+    #     which_query += search_book
+
+
+    if is_valid_params(year):
+        queryset = queryset.filter(year=year)
+        which_query += year
+        which_query += " , "
+
+    if is_valid_params(stream):
+        queryset = queryset.filter(stream=stream)
+        which_query += stream
+        which_query += " , "
+
+
+    if is_valid_params(term):
+        queryset = queryset.filter(stream=term)
+        which_query += term
+        which_query += " , "
+
+    context = {
+        'which_fun': "main",
+        'form': form,
+        'books': queryset,
+        'count': queryset.count()
+    }
+
+    if is_valid_params(which_query):
+        context['which_query'] = which_query
+    return render(request,'books/notes_list.html',context)
+
 
 def createSlug(title):
     slug_=""
