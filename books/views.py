@@ -264,3 +264,14 @@ def category_wise_books(request,category):
         'filter_by':category,
     }
     return render(request,'books/book_list.html',context)
+
+@login_required
+def upload_book_request(request):
+    account=Account.objects.get(email=request.user.email)
+    if account.is_classcr==False:
+        messages.warning(request,"You don't have permissions to access this page")
+        return redirect('index')
+    context={
+        'books':Book.objects.all().filter(is_check=False,year=account.year,stream=account.branch)
+    }
+    return render(request,'books/upload_book_request.html',context)

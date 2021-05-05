@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.exceptions import ValidationError
+from books.choices import STREAM,YEAR
 
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, password=None):
@@ -53,7 +54,17 @@ class Account(AbstractBaseUser):
 	is_superuser			= models.BooleanField(default=False)
 
 	# other
-	#first_name             = models
+	first_name             = models.CharField(max_length=20,blank=True,null=True)
+	last_name              = models.CharField(max_length=20,blank=True,null=True)
+
+	branch                 = models.CharField(choices=STREAM,max_length=30,blank=True,null=True)
+	year                   = models.CharField(choices=YEAR,max_length=30,blank=True,null=True)
+
+
+
+	is_classcr            = models.BooleanField(default=False)
+
+
 	# phone_number = PhoneNumberField(default='1234567890')
 
 	USERNAME_FIELD = 'email'   # This with login with email

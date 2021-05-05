@@ -7,6 +7,9 @@ from django.urls import reverse
 from account.models import Account
 
 User=settings.AUTH_USER_MODEL
+
+
+from .choices import STREAM,TERM,YEAR
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -27,24 +30,7 @@ class Category(models.Model):
         return reverse('category_wise_books',kwargs={'slug':self.slug})
 
 
-STREAM=(
-    ('EXTC','EXTC'),
-    ('INFT','INFT'),
-    ('CS','CS'),
-    ('ETRX','ETRX'),
-    ('BIOMED','BIOMED'),
-)
-YEAR=(
-    ('F.E','F.E'),
-    ('S.E','S.E'),
-    ('T.E','T.E'),
-    ('B.E','B.E'),
-)
 
-TERM=(
-    ('MID_TERM','MID_TERM'),
-    ('END_TERM','END_TERM'),
-)
 
 class Notes(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False,help_text="Name of the Module")
@@ -126,3 +112,12 @@ class ContactUs(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+
+class ClassCR(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email
+
