@@ -22,13 +22,13 @@
 {#    </div>#}
 {#</div>#}
     <div class="card card-body mx-auto my-4 auth-card shadow-sm">
-          <h1 class="display-4 text-center">Upload Book</h1>
+          <h1 class="display-4 text-center">Upload Notes</h1>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %} {{form|crispy}}
             <div class="row">
               <div class="col-6 pr-1">
                 <button class="btn btn-primary btn-block" type="submit">
-                  Upload Books
+                  Upload
                 </button>
               </div>
             </div>

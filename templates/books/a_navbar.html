@@ -16,8 +16,10 @@
 {#                <i class="fa fa-shopping-bag fa-lg mr-1"></i> #}
                   Books
               </a>
+            </li>
+          <li class="nav-item">
               <a href="{% url 'notes_list' %}" class="nav-link">
-{#                <i class="fa fa-shopping-bag fa-lg mr-1"></i> #}
+{#                <i class="fa fa-shopping-basket fa-lg mr-1"></i> #}
                   Notes
               </a>
             </li>
@@ -28,13 +30,19 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'contact_us' %}" class="nav-link"> ContactUs
+              <a href="{% url 'upload_notes' %}" class="nav-link">
+{#                <i class="fa fa-shopping-basket fa-lg mr-1"></i> #}
+                  Upload Notes
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{% url 'about_us' %}" class="nav-link"> AboutUs
-              </a>
-            </li>
+{#            <li class="nav-item">#}
+{#              <a href="{% url 'contact_us' %}" class="nav-link"> ContactUs#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#              <a href="{% url 'about_us' %}" class="nav-link"> AboutUs#}
+{#              </a>#}
+{#            </li>#}
           </ul>
           <form action="" class="inline-form mr-md-2 ml-auto">
             <div class="input-group">

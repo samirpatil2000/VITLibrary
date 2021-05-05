@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Book,Category,Notes
-from .forms import BookFilterForm,UploadBooks,NotesFilterForm
+from .models import Book,Category,Notes,ContactUs
+from .forms import BookFilterForm,UploadBooks,NotesFilterForm,ContactUsForm,UploadNotes
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -181,7 +182,7 @@ def createSlug(title):
 def uploadBook(request):
     form=UploadBooks()
     if request.method=="POST":
-        form=UploadBooks(request.POST or None)
+        form=UploadBooks(request.POST or None,request.FILES or None)
         if form.is_valid():
             name=request.POST.get('name')
             book=form.save(commit=False)
@@ -194,6 +195,24 @@ def uploadBook(request):
     }
     return render(request,'books/upload_book.html',context)
 
+@login_required
+def uploadNotes(request):
+    form=UploadNotes()
+    if request.method=="POST":
+        form=UploadNotes(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            name=request.POST.get('name')
+            notes=form.save(commit=False)
+            notes.uploaded_by=request.user
+            notes.slug=createSlug(name)
+            notes.save()
+            return redirect('notes_detail',notes.slug)
+    context={
+        'form':form
+    }
+    return render(request,'books/upload_notes.html',context)
+
+
 def aboutUs(request):
 
     context={
@@ -204,7 +223,30 @@ def aboutUs(request):
     return render(request,'books/about_us.html',context)
 
 def contactUs(request):
-    return render(request,'books/contactUS.html')
+    user=None
+    if request.user.is_authenticated:
+        user=request.user
+
+    if request.method=="POST":
+        full_name=request.POST.get('name')
+        email=request.POST.get('email')
+        desc=request.POST.get('desc')
+        ContactUs.objects.create(full_name=full_name,email=email,query=desc)
+        messages.success(request,"Your Messages Send Successfully ..!")
+        return redirect('index')
+
+    # form=ContactUsForm()
+    # if request.method=="POST":
+    #     form=ContactUsForm(request.POST or None)
+    #     if form.is_valid():
+    #         contact=form.save(commit=False)
+    #         contact.save()
+    #         messages.success(request,"Your Messages Send Successfully")
+    context={
+        # 'form':form,
+        'initial_user':user
+    }
+    return render(request,'books/contactUS.html',context)
 
 def stream_wise_books(request,stream):
     context={

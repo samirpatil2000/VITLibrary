@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (books,bookDetailView,aboutUs,
                     contactUs,index,getBookDownloadUrl,
                     uploadBook,stream_wise_books,category_wise_books,
-                    notes,notesDetailView
+                    notes,notesDetailView,uploadNotes
                     )
 
 urlpatterns = [
@@ -15,6 +15,7 @@ urlpatterns = [
     path('notes/<str:slug>',notesDetailView,name='notes_detail'),
     path('book-download/<str:slug>',getBookDownloadUrl,name='download_book'),
     path('uploadBook/',uploadBook,name='upload_book'),
+    path('uploadNotes/',uploadNotes,name='upload_notes'),
     path('aboutus/',aboutUs,name='about_us'),
     path('contactus/',contactUs,name='contact_us'),
     path('notes/',notes,name='notes_list'),

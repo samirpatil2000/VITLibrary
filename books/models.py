@@ -119,4 +119,10 @@ class Book(models.Model):
 
 
 
+class ContactUs(models.Model):
+    full_name = models.CharField(max_length=50,default="Your Name")
+    email = models.EmailField(max_length=100,default="example@gmail.com")
+    query = models.TextField()
 
+    def __str__(self):
+        return self.full_name
