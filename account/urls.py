@@ -10,8 +10,8 @@ urlpatterns = [
     path('',profile,name='profile'),
 
     path('password-reset/',
-         # forgetPass,
-         auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'),
+         forgetPass,
+         # auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'),
          name='password_reset'),
     path('password-reset/done',
          auth_views.PasswordResetDoneView.as_view(template_name='account/password_reset_done.html'),

@@ -1,8 +1,13 @@
+from django.contrib import messages
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from account.forms import RegistrationForm, AccountAuthenticationForm#, AccountUpdateForm
 from django.contrib.auth import views as auth_view
 # Create your views here.
+from account.models import Account
+
+from django.core.exceptions import ObjectDoesNotExist
+
 def index(request):
     return render(request,'account/home.html')
 
@@ -61,13 +66,25 @@ def login_view(request):
 def profile(request):
     return render(request,'account/profile.html')
 
-def forgetPass(request,useremail):
+def forgetPass(request):
+    email=None
     forget_pass_view=auth_view.PasswordResetView.as_view(
         template_name='account/password_reset.html',
+
+
         initial={
-            'email':useremail,
+            # 'emai,
         }
     )
+    if request.method=="POST":
+        email = request.POST.get('email')
+        print(email)
+        try:
+            Account.objects.get(email=email)
+        except ObjectDoesNotExist:
+            messages.warning(request,f"Sorry Your Account Doesn't exist please contact your class cr or admin")
+            redirect('contact_us')
+
     return forget_pass_view(request)
 
 
