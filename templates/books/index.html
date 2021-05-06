@@ -36,7 +36,7 @@
 <div class="container">
     <h1 style="margin-top: 20px"> Syllabus </h1>
     <div class="row" style="margin-top: 10px">
-        {% for stream,stream_count in streams %}
+        {% for stream,stream_count,stream_notes_count  in streams %}
         <div class="col-lg-4 col-12 mb-2 px-sm-1">
             <div class="card shadow-sm h-100">
     {#            <img class="card-img-top responsive" src="{{ book.thumbnail.url }}">#}
@@ -46,7 +46,17 @@
                   >
                 </h3>
                 <h4 class="card-text">
-                  <span class="badge badge-info">Books {{ stream_count }}</span>
+                    {% if not stream_count == 0 %}
+                        <span class="badge badge-info">Books {{ stream_count }}</span>
+                    {% else %}
+                        <span class="badge badge-warning">No Books </span>
+                    {% endif %}
+
+                    {% if not stream_notes_count == 0 %}
+                        <span class="badge badge-success">Notes {{ stream_notes_count }}</span>
+                    {% else %}
+                        <span class="badge badge-warning">No Notes </span>
+                    {% endif %}
                 </h4>
 {#                <p class="card-text">{{book.description|truncatewords:23 }}</p>#}
               </div>
