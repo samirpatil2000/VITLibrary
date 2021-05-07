@@ -45,13 +45,26 @@ def index(request):
 
 
 def bookDetailView(request,slug):
-
+    book=Book.objects.get(slug=slug)
     context={
-        'object':Book.objects.get(slug=slug),
+        'object':book
     }
     context['books_cat']=context['object'].category.all()
     context['books_count'] = len(context['books_cat'])
     print(context['books_count'])
+    try:
+        book_user=book.uploaded_by
+        if request.user.is_authenticated:
+            account = Account.objects.get(email=request.user.email)
+            # if account.is_classcr and account.branch==book_user.branch and account.year==book_user.year:
+            if (account.is_classcr and account.branch==book_user.branch and account.year==book_user.year) \
+                    or request.user.is_superuser or request.user.is_staff:
+            # context['delet']
+                context['is_cr']=True
+            # print(account)
+    except:
+        pass
+
     return render(request,'books/book_detail.html',context)
 
 
@@ -66,7 +79,7 @@ def getBookDownloadUrl(request,slug):
 def books(request):
     # email = EmailMessage('Subject', 'Body', to=['samir.patil@vit.edu.in'])
     # email.send()
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().filter(is_check=True)
 
     search_book=request.GET.get('search_book')
 
@@ -121,7 +134,7 @@ def notesDetailView(request,slug):
     return render(request,'books/notes_detail.html',context)
 
 def notes(request):
-    queryset = Notes.objects.all()
+    queryset = Notes.objects.all().filter(is_check=True)
 
     # search_book = request.GET.get('search_book')
 
@@ -190,6 +203,7 @@ def uploadBook(request):
             name=request.POST.get('name')
             book=form.save(commit=False)
             book.uploaded_by=request.user
+            book.is_check=False
             book.slug=createSlug(name)
             book.save()
             return redirect('book_detail',book.slug)
@@ -208,6 +222,7 @@ def uploadNotes(request):
             notes=form.save(commit=False)
             notes.uploaded_by=request.user
             notes.slug=createSlug(name)
+            notes.is_check=False
             notes.save()
             return redirect('notes_detail',notes.slug)
     context={
@@ -254,7 +269,7 @@ def contactUs(request):
 def stream_wise_books(request,stream):
     context={
         'which_fun':None,
-        'books':Book.objects.filter(stream__exact=stream),
+        'books':Book.objects.filter(stream__exact=stream,is_check=True),
         'filter_by':stream,
     }
     return render(request,'books/book_list.html',context)
@@ -263,18 +278,34 @@ def stream_wise_books(request,stream):
 def category_wise_books(request,category):
     context={
         'which_fun':None,
-        'books':Book.objects.filter(category__name=category),
+        'books':Book.objects.filter(category__name=category,is_check=True),
         'filter_by':category,
     }
     return render(request,'books/book_list.html',context)
 
 @login_required
 def upload_book_request(request):
+    # Account.objects.create(email="kanishka.gupta@vit.edu.in",password="123",branch="EXTC",is_classcr=True,year="S.E")
     account=Account.objects.get(email=request.user.email)
-    if account.is_classcr==False:
-        messages.warning(request,"You don't have permissions to access this page")
+    if account.is_classcr or account.is_superuser or account.is_staff:
+        context={
+            # 'books':Book.objects.all().filter(is_check=False,year=account.year,stream=account.branch)
+            'books':Book.objects.all().filter(is_check=False)
+        }
+        return render(request,'books/upload_book_request.html',context)
+    else:
+        messages.warning(request, "You don't have permissions to access this page")
         return redirect('index')
-    context={
-        'books':Book.objects.all().filter(is_check=False,year=account.year,stream=account.branch)
-    }
-    return render(request,'books/upload_book_request.html',context)
+
+
+@login_required
+def accept_book_request(request,request_book_slug):
+    book=Book.objects.get(slug=request_book_slug)
+    if request.user.is_classcr or request.user.is_superuser or request.user.is_staff:
+        book.is_check=True
+        book.save()
+        return redirect('book_detail',request_book_slug)
+    else:
+        messages.warning(request, "You don't have permissions to access this page")
+        return redirect('index')
+

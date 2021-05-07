@@ -27,10 +27,13 @@
     <h3 class="font-weight-light">Downloads only</h3>
     <h4>
       {% if object.is_syllabus %}
-      <span class="badge badge-success">In Syllabus</span>
+        <span class="badge badge-success">In Syllabus</span>
       {% else %}
-      <span class="badge badge-info">Not In a Course</span>
+        <span class="badge badge-info">Not In a Course</span>
       {% endif %}
+        {% if not object.is_check %}
+            <span class="badge badge-warning">Not Checked</span>
+        {% endif %}
     </h4>
     <p>{{object.description}}</p>
     <span>
@@ -40,6 +43,11 @@
         {% else %}
             <a href="#" download="#" class="btn btn-outline-info">Download</a>
             <a href="#" class="btn btn-outline-success">View</a>
+        {% endif %}
+        {% if is_cr and not object.is_check %}
+            <a href="{% url 'accept_book_request' object.slug %}" class="btn btn-outline-success">Accept</a>
+        {% elif object.is_check %}
+            <a href="#" class="btn btn-outline-danger">Remove</a>
         {% endif %}
     </span>
   </div>

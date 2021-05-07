@@ -45,7 +45,7 @@ class Notes(models.Model):
 
     google_drive_url = models.URLField(unique=True, blank=True, null=True)
 
-    is_visible = models.BooleanField(null=False, default=True)
+    is_visible = models.BooleanField(default=False)
     is_check = models.BooleanField(default=True)
 
     year = models.CharField(choices=YEAR, max_length=100,blank=True)
