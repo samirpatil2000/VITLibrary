@@ -1,7 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import login, authenticate, logout
-from account.forms import RegistrationForm, AccountAuthenticationForm#, AccountUpdateForm
+from account.forms import RegistrationForm, AccountAuthenticationForm, UpdateProfileForm  # , AccountUpdateForm
 from django.contrib.auth import views as auth_view
 # Create your views here.
 from account.models import Account
@@ -63,8 +64,8 @@ def login_view(request):
     # print(form)
     return render(request, "account/login.html", context)
 
-def profile(request):
-    return render(request,'account/profile.html')
+# def profile(request):
+#     return render(request,'account/profile.html')
 
 def forgetPass(request):
     email=None
@@ -87,4 +88,29 @@ def forgetPass(request):
 
     return forget_pass_view(request)
 
+@login_required
+def updateProfile(request):
+    context={
+        'user':request.user
+    }
+    form=UpdateProfileForm()
+    if request.POST:
+        form=UpdateProfileForm(request.POST or None,request.FILES or None,instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Profile is updated successfully")
+            context['success_message'] = "Updated"
+    else:
+        form=UpdateProfileForm(
+            initial={
+                "username":request.user.username,
+                "first_name":request.user.first_name,
+                "last_name":request.user.last_name,
+                "branch": request.user.branch,
+                "year": request.user.year,
 
+            }
+        )
+    context['form'] = form
+
+    return render(request,'account/profile.html',context)

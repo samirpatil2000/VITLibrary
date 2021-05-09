@@ -290,7 +290,8 @@ def upload_book_request(request):
     if account.is_classcr or account.is_superuser or account.is_staff:
         context={
             # 'books':Book.objects.all().filter(is_check=False,year=account.year,stream=account.branch)
-            'books':Book.objects.all().filter(is_check=False)
+            'books':Book.objects.all().filter(is_check=False),
+            'notes':Notes.objects.all().filter(is_check=False),
         }
         return render(request,'books/upload_book_request.html',context)
     else:
@@ -304,8 +305,50 @@ def accept_book_request(request,request_book_slug):
     if request.user.is_classcr or request.user.is_superuser or request.user.is_staff:
         book.is_check=True
         book.save()
+        messages.success(request, "Book Checked ..!")
         return redirect('book_detail',request_book_slug)
     else:
         messages.warning(request, "You don't have permissions to access this page")
         return redirect('index')
 
+
+@login_required
+def accept_notes_request(request,request_notes_slug):
+    notes=Notes.objects.get(slug=request_notes_slug)
+    if request.user.is_classcr or request.user.is_superuser or request.user.is_staff:
+        if notes.is_check:
+            messages.success(request, "Already Checked")
+
+            return redirect('notes_detail',request_notes_slug)
+        notes.is_check=True
+        messages.success(request, "Notes Checked ..!")
+        notes.save()
+        return redirect('notes_detail',request_notes_slug)
+    else:
+        messages.warning(request, "You don't have permissions to access this page")
+        return redirect('index')
+
+@login_required
+def remove_book(request,request_book_slug):
+    book=Book.objects.get(slug=request_book_slug)
+    if request.user.is_classcr or request.user.is_superuser or request.user.is_staff:
+        book.is_check=False
+        messages.warning(request, "Book Removed ..!")
+        book.save()
+        return redirect('book_detail',request_book_slug)
+    else:
+        messages.warning(request, "You don't have permissions to access this page")
+        return redirect('index')
+
+
+@login_required
+def remove_notes(request,request_notes_slug):
+    notes=Notes.objects.get(slug=request_notes_slug)
+    if request.user.is_classcr or request.user.is_superuser or request.user.is_staff:
+        notes.is_check=False
+        messages.warning(request, "Notes Removed ..!")
+        notes.save()
+        return redirect('notes_detail',request_notes_slug)
+    else:
+        messages.warning(request, "You don't have permissions to access this page")
+        return redirect('index')

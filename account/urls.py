@@ -1,13 +1,13 @@
 from django.urls import path
 # from django import views
-from .views import  registration_view,login_view,logout_view,profile,forgetPass
+from .views import  registration_view,login_view,logout_view,forgetPass,updateProfile
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('register/',registration_view,name='register'),
     path('logout/',logout_view,name='logout'),
     path('login/',login_view,name='login'),
-    path('',profile,name='profile'),
+    path('',updateProfile,name='profile'),
 
     path('password-reset/',
          forgetPass,

@@ -10,6 +10,7 @@
       <h2 class="font-weight-light mb-2">All Book Requests</h2>
 
     <hr />
+  <h2>Books</h2>
     <div class="row">
       {% for book in books %}
       <div class="col-lg-4 col-12 mb-2 px-sm-1">
@@ -36,6 +37,38 @@
       {% empty %}
       <div class="col-12 text-center">
         <h3 class="font-weight-light my-4 py-4">No Books found.</h3>
+      </div>
+      {% endfor %}
+    </div>
+    <hr />
+
+  <h2>Notes</h2>
+    <div class="row">
+      {% for book in notes %}
+      <div class="col-lg-4 col-12 mb-2 px-sm-1">
+        <div class="card shadow-sm h-100">
+{#            <img class="card-img-top responsive" src="{{ book.thumbnail.url }}">#}
+
+{#          <img#}
+{#            src="{% thumbnail book.thumbnail 0x150 %}"#}
+{#            src="{{ book.thumbnail.url }}"#}
+{#            alt="No Image"#}
+{#            class="img-aspect p-2"/>#}
+          <div class="card-body">
+            <h3 class="card-subtitle font-weight-light">
+              <a href="{{ book.get_absolute_url }}">{{book.name}}</a
+              >
+            </h3>
+            <h4 class="card-text">
+              <span class="badge badge-warning">Downloads 12</span>
+            </h4>
+            <p class="card-text">{{book.description|truncatewords:23 }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <h3 class="font-weight-light my-4 py-4">No Notes found.</h3>
       </div>
       {% endfor %}
     </div>
