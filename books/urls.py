@@ -44,12 +44,16 @@ urlpatterns = [
 --- 1. profile page ( add books uploaded by that user ) first name and last name
 --- 2. upload request page
 3. upload request page-ui
-4. google drive link
+--- . google drive link
 
 --- 2. create class cr table and associate all user within is class 
 --- 2. add books form
 --- 3. download url
 --- 4. search button
 
+
+6 . security packages -
+                      - honeypot 
+                      - defender
 
 """

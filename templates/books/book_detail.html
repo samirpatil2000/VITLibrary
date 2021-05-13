@@ -40,6 +40,8 @@
         {% if object.pdf_file %}
             <a href="{% url 'download_book' object.slug %}" download="{{ object.pdf_file.url }}" class="btn btn-outline-info">Download</a>
             <a href="{{ object.pdf_file.url }}" target="_blank" class="btn btn-outline-success">View</a>
+        {% elif object.google_drive_url %}
+            <a href="{{ object.google_drive_url }}" target="_blank" class="btn btn-outline-success">Open Google Drive</a>
         {% else %}
             <a href="#" download="#" class="btn btn-outline-info">Download</a>
             <a href="#" class="btn btn-outline-success">View</a>
