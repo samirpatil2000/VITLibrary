@@ -1,57 +1,26 @@
-# VIT College Library
-College Library
-## WebSite Live At 
+# College Library
+#### Online Portal For Books And Study Notes for an Organisation or Institute
+## Website Live At 
 https://curiosityishere.pythonanywhere.com
 
-# Installation to our django project
+## About
+* Implemented an online book portal In which can accessible by only
+ user whose email already feed in it
+* Implemented three types hierarchical users (Admin,Staff,Class CR,Student) other than student everyone has permission to remove or display the uploaded book 
+* Implemented book and notes upload features and uploaded books is visible to everyone
+only when it's checked by the staff members or class cr
+* Implemented advance search, and filters for books and notes
+* Implemented command manager to upload user details email,stream,year of study and much more
 
+## Security
+* Prevents from All types of Injections and Cross site scripting (Inbuilt)
+* Prevents from spamming,brute-forcing, and also from vertical and
+horizontal privileged escalation
+
+## Tech Stack
 [![Python Version](https://img.shields.io/badge/python-3.8-brightgreen.svg)](https://python.org)
 [![Django Version](https://img.shields.io/badge/django-3.2-brightgreen.svg)](https://djangoproject.com)
 
 
-
-## Running the Project Locally
-
-* First, clone the repository to your local machine:
-
-```bash
-git clone http://github.com/samirpatil2000/VITLibrary/
-```
-* Create & Activate Virtual Environment For Windows
-
-```bash
-py -m venv env
-.\env\Scripts\activate
-```
-
-* Create & Activate Virtual Environment For MacOs/Linux
-
-```bash
-python3 -m venv env
-source env/bin/activate
-```
-
-
-* Install the requirements:
-
-```bash
-pip install -r requirements.txt
-```
-
-
-* Create the database:
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-* Finally, run the development server:
-
-```bash
-python manage.py runserver
-```
-
-The project will be available at **127.0.0.1:8000**.
 
 

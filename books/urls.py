@@ -55,5 +55,6 @@ urlpatterns = [
 6 . security packages -
                       - honeypot 
                       - defender
+                      - django defender
 
 """

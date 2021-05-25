@@ -201,6 +201,7 @@ def uploadBook(request):
         form=UploadBooks(request.POST or None,request.FILES or None)
         if form.is_valid():
             name=request.POST.get('name')
+            print(request.POST.get('category'))
             book=form.save(commit=False)
             book.uploaded_by=request.user
             book.is_check=False
